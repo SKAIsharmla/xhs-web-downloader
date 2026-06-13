@@ -1,0 +1,443 @@
+/* ========================================================================
+   小红书图片下载器 — Styles
+   ======================================================================== */
+
+/* ---------- Reset & base ---------- */
+*, *::before, *::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+:root {
+  --color-primary: #ff2442;
+  --color-primary-hover: #e01e38;
+  --color-bg: #f2f3f5;
+  --color-surface: #ffffff;
+  --color-border: #e5e6e8;
+  --color-text: #1a1a1a;
+  --color-text-secondary: #666;
+  --color-hint: #999;
+  --color-success: #07c160;
+  --color-error: #fa5151;
+  --radius: 10px;
+  --shadow: 0 2px 8px rgba(0,0,0,.08);
+  --font: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Noto Sans SC",
+    "PingFang SC", "Microsoft YaHei", sans-serif;
+}
+
+html { font-size: 15px; }
+
+body {
+  font-family: var(--font);
+  background: var(--color-bg);
+  color: var(--color-text);
+  line-height: 1.6;
+  min-height: 100vh;
+}
+
+/* ---------- Header ---------- */
+.header {
+  background: var(--color-surface);
+  border-bottom: 1px solid var(--color-border);
+  position: sticky;
+  top: 0;
+  z-index: 100;
+}
+
+.header-inner {
+  max-width: 800px;
+  margin: 0 auto;
+  padding: 12px 20px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.logo {
+  font-size: 1.2rem;
+  font-weight: 700;
+}
+
+/* ---------- Layout ---------- */
+.container {
+  max-width: 800px;
+  margin: 0 auto;
+  padding: 20px;
+}
+
+/* ---------- Card ---------- */
+.card {
+  background: var(--color-surface);
+  border-radius: var(--radius);
+  box-shadow: var(--shadow);
+  padding: 20px;
+  margin-bottom: 16px;
+}
+
+/* ---------- Input section ---------- */
+.input-label {
+  display: block;
+  font-weight: 600;
+  margin-bottom: 8px;
+}
+
+.input-row {
+  display: flex;
+  gap: 10px;
+}
+
+.input {
+  flex: 1;
+  padding: 10px 14px;
+  border: 1px solid var(--color-border);
+  border-radius: 8px;
+  font-size: 0.95rem;
+  font-family: inherit;
+  outline: none;
+  transition: border-color .2s;
+}
+
+.input:focus {
+  border-color: var(--color-primary);
+}
+
+.hint {
+  margin-top: 6px;
+  font-size: 0.82rem;
+  color: var(--color-hint);
+}
+
+/* ---------- Buttons ---------- */
+.btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  padding: 10px 20px;
+  border: none;
+  border-radius: 8px;
+  font-size: 0.95rem;
+  font-family: inherit;
+  font-weight: 600;
+  cursor: pointer;
+  white-space: nowrap;
+  transition: background .2s, opacity .2s;
+}
+
+.btn:disabled {
+  opacity: .5;
+  cursor: not-allowed;
+}
+
+.btn-primary {
+  background: var(--color-primary);
+  color: #fff;
+}
+.btn-primary:hover:not(:disabled) {
+  background: var(--color-primary-hover);
+}
+
+.btn-ghost {
+  background: transparent;
+  color: var(--color-text-secondary);
+}
+.btn-ghost:hover {
+  background: rgba(0,0,0,.05);
+}
+
+.btn-download {
+  background: #07c160;
+  color: #fff;
+  font-size: 1rem;
+  padding: 12px 28px;
+}
+.btn-download:hover:not(:disabled) {
+  background: #06ad56;
+}
+
+/* ---------- Status ---------- */
+.status-area {
+  padding: 12px 16px;
+  border-radius: var(--radius);
+  margin-bottom: 16px;
+  font-weight: 500;
+}
+.status-area.success { background: #e8f8ee; color: #06a050; }
+.status-area.error   { background: #fef0ef; color: var(--color-error); }
+.status-area.loading { background: #f0f5ff; color: #1a66ff; }
+.status-area.hidden  { display: none; }
+
+/* ---------- Post info ---------- */
+.post-meta {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  margin-bottom: 10px;
+}
+
+.post-meta-item {
+  font-size: 0.82rem;
+  color: var(--color-text-secondary);
+  background: var(--color-bg);
+  padding: 2px 10px;
+  border-radius: 12px;
+}
+
+.post-title {
+  font-size: 1.1rem;
+  margin-bottom: 4px;
+  word-break: break-all;
+}
+
+.post-desc {
+  font-size: 0.9rem;
+  color: var(--color-text-secondary);
+  word-break: break-all;
+  display: -webkit-box;
+  -webkit-line-clamp: 3;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+
+/* ---------- Toolbar ---------- */
+.toolbar {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 12px;
+}
+
+.checkbox-label {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  cursor: pointer;
+  font-size: 0.92rem;
+  user-select: none;
+}
+
+.checkbox-label input[type="checkbox"] {
+  width: 16px;
+  height: 16px;
+  accent-color: var(--color-primary);
+  cursor: pointer;
+}
+
+.toolbar-info {
+  font-size: 0.88rem;
+  color: var(--color-text-secondary);
+  flex: 1;
+}
+
+/* ---------- Image grid ---------- */
+.image-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(140px, 1fr));
+  gap: 12px;
+  margin-bottom: 16px;
+}
+
+.image-card {
+  position: relative;
+  border-radius: 8px;
+  overflow: hidden;
+  background: var(--color-bg);
+  aspect-ratio: 1;
+  border: 2px solid transparent;
+  cursor: pointer;
+  transition: border-color .15s;
+}
+
+.image-card.selected {
+  border-color: var(--color-primary);
+}
+
+.image-card img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+}
+
+.image-card .image-index {
+  position: absolute;
+  top: 6px;
+  left: 6px;
+  background: rgba(0,0,0,.55);
+  color: #fff;
+  font-size: 0.75rem;
+  font-weight: 700;
+  width: 24px;
+  height: 24px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.image-card .image-check {
+  position: absolute;
+  top: 6px;
+  right: 6px;
+  width: 22px;
+  height: 22px;
+  border-radius: 50%;
+  background: rgba(255,255,255,.9);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 0.7rem;
+  font-weight: 700;
+  color: var(--color-primary);
+  opacity: 0;
+  transition: opacity .15s;
+}
+
+.image-card.selected .image-check {
+  opacity: 1;
+}
+
+.image-card .image-placeholder {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--color-hint);
+  font-size: 0.8rem;
+  background: var(--color-bg);
+}
+
+/* ---------- Progress ---------- */
+#progressArea {
+  margin-bottom: 16px;
+}
+
+.progress-bar-track {
+  height: 6px;
+  background: var(--color-bg);
+  border-radius: 3px;
+  overflow: hidden;
+  margin-bottom: 8px;
+}
+
+.progress-bar-fill {
+  height: 100%;
+  width: 0%;
+  background: var(--color-primary);
+  border-radius: 3px;
+  transition: width .3s ease;
+}
+
+.progress-text {
+  font-size: 0.88rem;
+  color: var(--color-text-secondary);
+}
+
+/* ---------- Modal ---------- */
+.modal-overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(0,0,0,.45);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 200;
+  padding: 20px;
+}
+
+.modal-overlay.hidden {
+  display: none;
+}
+
+.modal {
+  background: var(--color-surface);
+  border-radius: 12px;
+  width: 100%;
+  max-width: 480px;
+  max-height: 90vh;
+  overflow-y: auto;
+  box-shadow: 0 8px 32px rgba(0,0,0,.15);
+}
+
+.modal-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 20px 24px 0;
+}
+
+.modal-header h2 {
+  font-size: 1.15rem;
+}
+
+.modal-close {
+  font-size: 1.2rem;
+  padding: 4px 10px;
+}
+
+.modal-body {
+  padding: 20px 24px;
+}
+
+.modal-footer {
+  padding: 0 24px 20px;
+}
+
+.form-group {
+  margin-bottom: 16px;
+}
+
+.form-group label {
+  display: block;
+  font-size: 0.88rem;
+  font-weight: 600;
+  margin-bottom: 6px;
+  color: var(--color-text-secondary);
+}
+
+.form-group .input {
+  width: 100%;
+}
+
+.checkbox-form-group label {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  cursor: pointer;
+  font-weight: 400;
+  color: var(--color-text);
+}
+
+.checkbox-form-group input[type="checkbox"] {
+  width: 16px;
+  height: 16px;
+  accent-color: var(--color-primary);
+}
+
+select.input {
+  appearance: auto;
+}
+
+textarea.input {
+  resize: vertical;
+  font-family: inherit;
+}
+
+/* ---------- Utilities ---------- */
+.hidden { display: none !important; }
+
+/* ---------- Responsive ---------- */
+@media (max-width: 600px) {
+  .container { padding: 12px; }
+  .header-inner { padding: 10px 12px; }
+  .logo { font-size: 1rem; }
+  .input-row { flex-direction: column; }
+  .image-grid {
+    grid-template-columns: repeat(auto-fill, minmax(100px, 1fr));
+    gap: 8px;
+  }
+  .toolbar { flex-direction: column; align-items: stretch; }
+  .toolbar-info { text-align: center; }
+  .btn-download { width: 100%; justify-content: center; }
+}

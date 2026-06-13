@@ -1,0 +1,26 @@
+# ======================================================================
+# 小红书图片下载器 — docker compose
+# 用法：
+#   启动：      docker compose up -d
+#   停止：      docker compose down
+#   查看日志：  docker compose logs -f
+#   更新镜像：  docker compose pull && docker compose up -d
+# ======================================================================
+
+services:
+  xhs-downloader:
+    build:
+      context: ..
+      dockerfile: web-app/Dockerfile
+    image: xhs-web-downloader:latest
+    container_name: xhs-downloader
+    restart: unless-stopped
+    ports:
+      - "8080:8080"
+    volumes:
+      # 下载文件存储目录（宿主机路径按需修改）
+      - ./downloads:/app/web-app/downloads
+      # 可选：持久化配置文件（首次启动会自动创建）
+      - ./settings.json:/app/web-app/settings.json
+    environment:
+      - TZ=Asia/Shanghai

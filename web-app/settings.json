@@ -1,0 +1,9 @@
+{
+  "download_dir": "./downloads",
+  "image_format": "jpeg",
+  "folder_mode": false,
+  "author_archive": true,
+  "cookie": "",
+  "server_host": "0.0.0.0",
+  "server_port": 8080
+}

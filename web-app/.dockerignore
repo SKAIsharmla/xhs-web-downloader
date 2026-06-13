@@ -1,0 +1,30 @@
+# Ignore git and CI
+.git
+.github
+.gitignore
+
+# Ignore documentation
+*.md
+LICENSE
+
+# Ignore static assets not needed for web-app
+XHS-Downloader/static/screenshot
+XHS-Downloader/static/*.png
+XHS-Downloader/static/*.jpg
+XHS-Downloader/static/*.icns
+XHS-Downloader/static/*.ico
+XHS-Downloader/static/other
+
+# Ignore Python cache
+__pycache__
+*.pyc
+*.pyo
+
+# Ignore IDE files
+.idea
+.vscode
+*.swp
+*.swo
+
+# Ignore uv lock file (not needed in Docker)
+uv.lock
