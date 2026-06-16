@@ -5,6 +5,8 @@
 
 基于 XHS-Downloader 核心引擎的 Web 图形界面工具。在 NAS 或 Linux 服务器上部署，通过浏览器访问即可下载小红书无水印图片。
 
+> 🌀 Vibe Coding — 本项目大部分代码由 Claude（Anthropic）生成，通过对话驱动开发。
+
 ![](https://img.shields.io/badge/Python-3.12+-blue)
 ![](https://img.shields.io/badge/FastAPI-0.136-green)
 ![](https://img.shields.io/badge/license-GPL--3.0-red)
