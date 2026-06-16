@@ -221,16 +221,20 @@ async def download_images(req: DownloadRequest):
         if success:
             await xhs._XHS__add_record(data["作品ID"])
             await xhs.save_data(data)
-
-        return {
-            "success": True,
-            "message": f"下载完成！共 {success} 张图片已保存到服务器",
-            "data": {
-                "作品标题": data.get("作品标题", ""),
-                "作者昵称": data.get("作者昵称", ""),
-                "下载数量": success,
-            },
-        }
+            return {
+                "success": True,
+                "message": f"下载完成！共 {success} 张图片已保存到服务器",
+                "data": {
+                    "作品标题": data.get("作品标题", ""),
+                    "作者昵称": data.get("作者昵称", ""),
+                    "下载数量": success,
+                },
+            }
+        else:
+            return JSONResponse(
+                status_code=500,
+                content={"success": False, "message": "下载失败，所有图片均未保存成功"},
+            )
     except Exception as e:
         return JSONResponse(
             status_code=500,
