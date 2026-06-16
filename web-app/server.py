@@ -37,8 +37,12 @@ from source import XHS
 # ---------------------------------------------------------------------------
 
 def _map_config_to_xhs(cfg: dict) -> dict:
+    # XHS-Downloader 内部会创建 {work_path}/{folder_name}/ 作为下载目录。
+    # 将用户配置的 download_dir 拆分为父路径和文件夹名，避免多出一层 "Download/"。
+    dl = Path(cfg["download_dir"])
     return {
-        "work_path": cfg["download_dir"],
+        "work_path": str(dl.parent),
+        "folder_name": dl.name,
         "image_format": cfg["image_format"],
         "folder_mode": cfg["folder_mode"],
         "author_archive": cfg["author_archive"],
