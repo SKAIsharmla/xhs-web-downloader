@@ -43,10 +43,9 @@ RUN pip install --no-cache-dir \
     uvicorn>=0.48.0 \
     websockets>=16.0
 
-# ---- Copy XHS-Downloader source and register the package (--no-deps: 依赖已安装) ----
+# ---- Copy XHS-Downloader source (直接通过 PYTHONPATH 导入) ----
 COPY XHS-Downloader/source  /app/XHS-Downloader/source
 COPY XHS-Downloader/locale  /app/XHS-Downloader/locale
-RUN pip install --no-cache-dir --no-deps /app/XHS-Downloader/
 
 # ---- Copy web-app ----
 COPY web-app /app/web-app
@@ -54,7 +53,7 @@ COPY web-app /app/web-app
 # ---- Runtime config ----
 WORKDIR /app/web-app
 
-ENV PYTHONPATH=/app/XHS-Downloader:$PYTHONPATH
+ENV PYTHONPATH=/app/XHS-Downloader
 ENV XHS_CONFIG_PATH=/data/config/settings.json
 ENV XHS_DOWNLOAD_DIR=/data/downloads
 
