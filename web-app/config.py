@@ -1,4 +1,20 @@
+# Copyright (C) 2025 SKAIsharmla
+#
+# This program is free software: you can redistribute it and/or modify
+# it under the terms of the GNU General Public License as published by
+# the Free Software Foundation, either version 3 of the License, or
+# (at your option) any later version.
+#
+# This program is distributed in the hope that it will be useful,
+# but WITHOUT ANY WARRANTY; without even the implied warranty of
+# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+# GNU General Public License for more details.
+#
+# You should have received a copy of the GNU General Public License
+# along with this program.  If not, see <https://www.gnu.org/licenses/>.
+
 import json
+from os import environ
 from pathlib import Path
 
 
@@ -16,11 +32,13 @@ class WebConfig:
     }
 
     def __init__(self, config_path: str | Path | None = None):
-        self.config_path = (
-            Path(config_path)
-            if config_path
-            else Path(__file__).parent / "settings.json"
-        )
+        # Priority: explicit path > env var XHS_CONFIG_PATH > default ./settings.json
+        if config_path is None:
+            config_path = environ.get(
+                "XHS_CONFIG_PATH",
+                str(Path(__file__).parent / "settings.json"),
+            )
+        self.config_path = Path(config_path)
 
     def load(self) -> dict:
         if self.config_path.exists():

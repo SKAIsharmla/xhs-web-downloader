@@ -21,5 +21,8 @@ Thumbs.db
 
 # Project specific
 web-app/downloads/
+web-app/xhs-data/
+其他文件/
+项目文件/
 XHS-Downloader/Volume/
 XHS-Downloader/static/screenshot/

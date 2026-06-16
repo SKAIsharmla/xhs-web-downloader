@@ -1,5 +1,9 @@
 # 小红书图片下载器 Web版
 
+> **修改声明**：本项目基于 [XHS-Downloader](https://github.com/JoeanAmier/XHS-Downloader)（GPL-3.0）进行了修改，为其添加了 Web 图形界面（FastAPI + 前端）、Docker 容器化部署和设置管理功能。修改时间：2025 年。  
+> 修改者：[SKAIsharmla](https://github.com/SKAIsharmla)  
+> 本项目的完整源代码可在 GitHub 获取。
+
 > 基于 [XHS-Downloader](https://github.com/JoeanAmier/XHS-Downloader) 核心引擎的 Web 图形界面工具。在局域网 Linux 服务器上部署，通过浏览器访问即可下载小红书无水印图片。
 
 ![](https://img.shields.io/badge/Python-3.12+-blue)

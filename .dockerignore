@@ -1,0 +1,32 @@
+.git
+.github
+.gitignore
+.gitattributes
+__pycache__
+*.pyc
+*.pyo
+.idea
+.vscode
+*.swp
+*.swo
+*~
+
+# Ignore local data (docker volumes)
+web-app/xhs-data
+web-app/downloads
+
+# Ignore XHS-Downloader build artifacts / screenshots
+XHS-Downloader/static/screenshot
+XHS-Downloader/static/*.png
+XHS-Downloader/static/*.jpg
+XHS-Downloader/static/*.icns
+XHS-Downloader/static/*.ico
+XHS-Downloader/static/other
+XHS-Downloader/locale/*.mo
+XHS-Downloader/locale/*.po
+XHS-Downloader/locale/*.pot
+
+# Ignore docs (will not be used in runtime)
+**/README.md
+**/LICENSE
+**/Release_Notes.md
