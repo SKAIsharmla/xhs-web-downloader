@@ -1,6 +1,6 @@
 # 小红书图片下载器 Web版
 
-> **修改声明**：本项目基于 [XHS-Downloader](https://github.com/JoeanAmier/XHS-Downloader)（GPL-3.0）进行了修改，为其添加了 Web 图形界面（FastAPI + 前端）、Docker 容器化部署和设置管理功能。修改时间：2025 年。  
+> **修改声明**：本项目基于 [XHS-Downloader](https://github.com/JoeanAmier/XHS-Downloader)（GPL-3.0）进行了修改，为其添加了 Web 图形界面（FastAPI + 前端）、Docker 容器化部署和设置管理功能。修改时间：2026 年。  
 > 修改者：[SKAIsharmla](https://github.com/SKAIsharmla)
 
 本目录是 Web 界面子项目，完整说明请查看根目录 [README.md](../README.md)。
