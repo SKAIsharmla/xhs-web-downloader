@@ -54,6 +54,9 @@ def _map_config_to_xhs(cfg: dict) -> dict:
 
 web_config = WebConfig()
 
+# 解析结果缓存：避免下载时重新请求小红书页面（可能被限流）
+_note_cache: dict[str, dict] = {}
+
 # ---------------------------------------------------------------------------
 # Request / response models
 # ---------------------------------------------------------------------------
@@ -140,6 +143,10 @@ async def parse_link(req: ParseRequest):
             )
 
         data = result[0]
+        # 缓存解析结果，下载时直接用缓存的图片 URL，避免重新请求页面
+        if pid := data.get("作品ID"):
+            _note_cache[pid] = data
+
         img_urls = data.get("下载地址", [])
         live_urls = data.get("动图地址", []) or [None] * len(img_urls)
 
@@ -179,26 +186,49 @@ async def download_images(req: DownloadRequest):
     """下载指定序号的图片到服务器"""
     xhs: XHS = app.state.xhs
     try:
-        result = await xhs.extract(req.url, download=True, index=req.index)
-        if not result:
-            return JSONResponse(
-                status_code=400,
-                content={
-                    "success": False,
-                    "message": "下载失败，无法获取作品数据",
-                },
-            )
+        # 优先尝试解析（网络请求可能会被限流）
+        result = await xhs.extract(req.url, download=False)
+        if result and result[0] and result[0].get("下载地址"):
+            data = result[0]
+        else:
+            # 解析失败，尝试从缓存中获取之前解析的数据
+            cached = None
+            for pid, d in _note_cache.items():
+                if pid in req.url:
+                    cached = d
+                    break
+            if not cached or not cached.get("下载地址"):
+                return JSONResponse(
+                    status_code=400,
+                    content={"success": False, "message": "获取作品数据失败，请先解析链接"},
+                )
+            data = cached
 
-        data = result[0] if result[0] else {}
-        total = len(req.index) if req.index else len(data.get("下载地址", []))
+        # 手动调用下载引擎（不需要重新请求小红书页面）
+        name = xhs._XHS__naming_rules(data)
+        nickname = data["作者ID"] + "_" + xhs.CLEANER.filter_name(data["作者昵称"])
+        _, dl_results = await xhs.download.run(
+            data["下载地址"],
+            data.get("动图地址", [None] * len(data["下载地址"])),
+            req.index,
+            nickname,
+            name,
+            data["作品类型"],
+            data["时间戳"],
+        )
+
+        success = sum(1 for r in dl_results if r)
+        if success:
+            await xhs._XHS__add_record(data["作品ID"])
+            await xhs.save_data(data)
 
         return {
             "success": True,
-            "message": "下载任务已完成",
+            "message": f"下载完成！共 {success} 张图片已保存到服务器",
             "data": {
                 "作品标题": data.get("作品标题", ""),
                 "作者昵称": data.get("作者昵称", ""),
-                "下载数量": total,
+                "下载数量": success,
             },
         }
     except Exception as e:
