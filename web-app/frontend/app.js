@@ -26,6 +26,7 @@
   // DOM refs
   // -----------------------------------------------------------------------
   const urlInput        = document.getElementById("urlInput");
+  const pasteBtn        = document.getElementById("pasteBtn");
   const parseBtn        = document.getElementById("parseBtn");
   const statusArea      = document.getElementById("statusArea");
   const resultPanel     = document.getElementById("resultPanel");
@@ -97,6 +98,57 @@
     // The backend returns YYYY-MM-DD_HH:MM:SS
     return timeStr.replace(/_/, " ");
   }
+
+  // -----------------------------------------------------------------------
+  // Paste with URL extraction
+  // -----------------------------------------------------------------------
+  const XHS_URL_RE = /https?:\/\/(?:www\.)?(?:xhslink\.com\/\S+|xiaohongshu\.com\/(?:explore|discovery\/item)\/\S+)/i;
+
+  function extractXhsUrl(text) {
+    const match = text.match(XHS_URL_RE);
+    return match ? match[0].replace(/[)>\]]$/, "") : null;
+  }
+
+  function applyExtractedUrl(raw) {
+    const url = extractXhsUrl(raw);
+    if (url) {
+      urlInput.value = url;
+      setTimeout(handleParse, 300);
+      return true;
+    }
+    return false;
+  }
+
+  // Button-click path: reads clipboard via API (works on PC HTTPS/localhost)
+  async function handlePaste() {
+    let clipboardText;
+    try {
+      clipboardText = await navigator.clipboard.readText();
+    } catch {
+      showError("无法读取剪贴板，请检查浏览器权限，或长按输入框手动粘贴");
+      return;
+    }
+
+    if (!clipboardText || !clipboardText.trim()) {
+      showError("剪贴板为空，请先复制链接");
+      return;
+    }
+
+    if (!applyExtractedUrl(clipboardText)) {
+      showError("剪贴板内容不包含有效的小红书链接");
+    }
+  }
+
+  // Native paste event: works everywhere including mobile long-paste
+  urlInput.addEventListener("paste", (e) => {
+    // Let the default paste happen first, then read the value
+    setTimeout(() => {
+      const raw = urlInput.value;
+      if (raw && applyExtractedUrl(raw)) {
+        showSuccess("已识别链接");
+      }
+    }, 0);
+  });
 
   // -----------------------------------------------------------------------
   // API calls
@@ -347,6 +399,7 @@
   // Event bindings
   // -----------------------------------------------------------------------
   parseBtn.addEventListener("click", handleParse);
+  pasteBtn.addEventListener("click", handlePaste);
 
   urlInput.addEventListener("keydown", (e) => {
     if (e.key === "Enter") handleParse();
