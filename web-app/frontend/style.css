@@ -162,13 +162,14 @@ body {
   background: rgba(0,0,0,.05);
 }
 
-.btn-paste {
-  background: #fff;
-  color: var(--color-primary);
-  border: 1.5px solid var(--color-primary);
+.btn-clear {
+  background: transparent;
+  color: var(--color-hint);
+  border: 1.5px solid var(--color-border);
 }
-.btn-paste:hover:not(:disabled) {
-  background: #fff5f7;
+.btn-clear:hover:not(:disabled) {
+  background: var(--color-bg);
+  color: var(--color-text-secondary);
 }
 
 .btn-download {
