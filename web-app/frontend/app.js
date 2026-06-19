@@ -117,6 +117,10 @@
     urlInput.focus();
     hideStatus();
     resultPanel.classList.add("hidden");
+    imageGrid.innerHTML = "";
+    progressArea.classList.add("hidden");
+    currentImages = [];
+    currentUrl = "";
   }
 
   // -----------------------------------------------------------------------
